@@ -1,3 +1,5 @@
-* Installation
+# Installation
+
 Run:
+
     ./bin/install
