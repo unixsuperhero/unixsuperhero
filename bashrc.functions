@@ -1,0 +1,32 @@
+
+# Author: Joshua Toyota (Unix Superhero)
+# Wordpress: http://unixsuperhero.wordpress.com
+# Github: http://github.com/jearsh
+
+
+gs () {
+  # Description: http://wp.me/p2MUFm-6
+  # Demo: http://youtu.be/_fFzgnyYYD4
+  # Usage: $> gs [pattern]   # see blog for a better explanation
+  #   vim -O $(gs views)     # open all changed views
+  #   gco $(gs feat)         # revert modified cucumber tests
+
+  git status -s | sed "s/...//;s/.* -> //" | grep "$1" | sort -u
+}
+
+ff () {
+  # Name: Fuzzy Finder for Bash
+  # Created At: 2012-06-14 11:25:00
+  # Wordpress: http://wp.me/p2MUFm-n
+  # Description: Find files with a series of letters in the given order, but not necessarily next to each other.
+  find . -type f | grep -i "$(echo "$1" | sed 's/./&.*/g')"
+}
+
+def () {
+  # Description: Quickly find the definition of a binary, alias, or function;
+  #              without knowing which type it is.
+  which -a "$1" 2>/dev/null
+  alias "$1" 2>/dev/null
+  declare -f "$1" 2>/dev/null
+}
+

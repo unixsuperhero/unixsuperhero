@@ -1,0 +1,12 @@
+#!/bin/bash
+
+(
+  [ -r "../bashrc.functions" ] && cd ..
+  [ ! -r "bashrc.functions" ] && echo "bashrc.functions not found!" && exit 1
+
+  ln -s "$(pwd)/bashrc.functions" ~/.bashrc.functions-hi
+  cat <<BASHRC >>~/.bashrc
+
+  [ -r "~/.bashrc.functions" ] && source "~/.bashrc.functions"
+BASHRC
+)
