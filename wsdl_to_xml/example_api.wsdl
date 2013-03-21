@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ Web Services API : ExampleWebService
+-->
+<definitions targetNamespace="http://soap.redacted.com/schemas/class/ExampleWebService" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://soap.redacted.com/schemas/class/ExampleWebService">
+ <types>
+  <xsd:schema elementFormDefault="qualified" targetNamespace="http://soap.redacted.com/schemas/class/ExampleWebService">
+   <xsd:element name="DebuggingInfo">
+    <xsd:complexType>
+     <xsd:sequence>
+      <xsd:element name="debugLog" type="xsd:string"/>
+     </xsd:sequence>
+    </xsd:complexType>
+   </xsd:element>
+   <xsd:simpleType name="ID">
+    <xsd:restriction base="xsd:string">
+     <xsd:length value="18"/>
+     <xsd:pattern value="[a-zA-Z0-9]{18}"/>
+    </xsd:restriction>
+   </xsd:simpleType>
+   <xsd:simpleType name="LogCategory">
+    <xsd:restriction base="xsd:string">
+     <xsd:enumeration value="Db"/>
+     <xsd:enumeration value="Workflow"/>
+     <xsd:enumeration value="Validation"/>
+     <xsd:enumeration value="Callout"/>
+     <xsd:enumeration value="Apex_code"/>
+     <xsd:enumeration value="Apex_profiling"/>
+     <xsd:enumeration value="Visualforce"/>
+     <xsd:enumeration value="System"/>
+     <xsd:enumeration value="All"/>
+    </xsd:restriction>
+   </xsd:simpleType>
+   <xsd:simpleType name="LogCategoryLevel">
+    <xsd:restriction base="xsd:string">
+     <xsd:enumeration value="Internal"/>
+     <xsd:enumeration value="Finest"/>
+     <xsd:enumeration value="Finer"/>
+     <xsd:enumeration value="Fine"/>
+     <xsd:enumeration value="Debug"/>
+     <xsd:enumeration value="Info"/>
+     <xsd:enumeration value="Warn"/>
+     <xsd:enumeration value="Error"/>
+    </xsd:restriction>
+   </xsd:simpleType>
+   <xsd:complexType name="LogInfo">
+    <xsd:sequence>
+     <xsd:element name="category" type="tns:LogCategory"/>
+     <xsd:element name="level" type="tns:LogCategoryLevel"/>
+    </xsd:sequence>
+   </xsd:complexType>
+   <xsd:simpleType name="LogType">
+    <xsd:restriction base="xsd:string">
+     <xsd:enumeration value="None"/>
+     <xsd:enumeration value="Debugonly"/>
+     <xsd:enumeration value="Db"/>
+     <xsd:enumeration value="Profiling"/>
+     <xsd:enumeration value="Callout"/>
+     <xsd:enumeration value="Detail"/>
+    </xsd:restriction>
+   </xsd:simpleType>
+   <xsd:element name="DebuggingHeader">
+    <xsd:complexType>
+     <xsd:sequence>
+      <xsd:element name="categories" minOccurs="0" maxOccurs="unbounded" type="tns:LogInfo"/>
+      <xsd:element name="debugLevel" type="tns:LogType"/>
+     </xsd:sequence>
+    </xsd:complexType>
+   </xsd:element>
+   <xsd:element name="CallOptions">
+    <xsd:complexType>
+     <xsd:sequence>
+      <xsd:element name="client" type="xsd:string"/>
+     </xsd:sequence>
+    </xsd:complexType>
+   </xsd:element>
+   <xsd:element name="SessionHeader">
+    <xsd:complexType>
+     <xsd:sequence>
+      <xsd:element name="sessionId" type="xsd:string"/>
+     </xsd:sequence>
+    </xsd:complexType>
+   </xsd:element>
+   <xsd:element name="AllowFieldTruncationHeader">
+    <xsd:complexType>
+     <xsd:sequence>
+      <xsd:element name="allowFieldTruncation" type="xsd:boolean"/>
+     </xsd:sequence>
+    </xsd:complexType>
+   </xsd:element>
+   <xsd:complexType name="Address">
+    <xsd:sequence>
+     <xsd:element name="city" minOccurs="0" type="xsd:string" nillable="true"/>
+     <xsd:element name="country" minOccurs="0" type="xsd:string" nillable="true"/>
+     <xsd:element name="postalCode" minOccurs="0" type="xsd:string" nillable="true"/>
+     <xsd:element name="state" minOccurs="0" type="xsd:string" nillable="true"/>
+     <xsd:element name="street" minOccurs="0" type="xsd:string" nillable="true"/>
+    </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="Customer">
+    <xsd:sequence>
+     <xsd:element name="dayPhone" minOccurs="0" type="xsd:string" nillable="true"/>
+     <xsd:element name="email" minOccurs="0" type="xsd:string" nillable="true"/>
+     <xsd:element name="evenPhone" minOccurs="0" type="xsd:string" nillable="true"/>
+     <xsd:element name="firstName" minOccurs="0" type="xsd:string" nillable="true"/>
+     <xsd:element name="lastName" minOccurs="0" type="xsd:string" nillable="true"/>
+     <xsd:element name="middleName" minOccurs="0" type="xsd:string" nillable="true"/>
+     <xsd:element name="suffix" minOccurs="0" type="xsd:string" nillable="true"/>
+    </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="PurchaseOrder">
+    <xsd:sequence>
+     <xsd:element name="deviceName" minOccurs="0" type="xsd:string" nillable="true"/>
+    </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="WSResponse">
+    <xsd:sequence>
+     <xsd:element name="status" minOccurs="0" type="xsd:string" nillable="true"/>
+     <xsd:element name="strMsg" minOccurs="0" type="xsd:string" nillable="true"/>
+     <xsd:element name="userID" minOccurs="0" type="xsd:string" nillable="true"/>
+    </xsd:sequence>
+   </xsd:complexType>
+   <xsd:element name="createExampleCustomer">
+    <xsd:complexType>
+     <xsd:sequence>
+      <xsd:element name="customerAddress" type="tns:Address" nillable="true"/>
+      <xsd:element name="customerInfo" type="tns:Customer" nillable="true"/>
+     </xsd:sequence>
+    </xsd:complexType>
+   </xsd:element>
+   <xsd:element name="createExampleCustomerResponse">
+    <xsd:complexType>
+     <xsd:sequence>
+      <xsd:element name="result" type="tns:WSResponse" nillable="true"/>
+     </xsd:sequence>
+    </xsd:complexType>
+   </xsd:element>
+   <xsd:element name="createExampleCustomerWithPO">
+    <xsd:complexType>
+     <xsd:sequence>
+      <xsd:element name="customerAddress" type="tns:Address" nillable="true"/>
+      <xsd:element name="customerInfo" type="tns:Customer" nillable="true"/>
+      <xsd:element name="PO" type="tns:PurchaseOrder" nillable="true"/>
+     </xsd:sequence>
+    </xsd:complexType>
+   </xsd:element>
+   <xsd:element name="createExampleCustomerWithPOResponse">
+    <xsd:complexType>
+     <xsd:sequence>
+      <xsd:element name="result" type="tns:WSResponse" nillable="true"/>
+     </xsd:sequence>
+    </xsd:complexType>
+   </xsd:element>
+  </xsd:schema>
+ </types>
+ <!-- Message for the header parts -->
+ <message name="Header">
+  <part name="AllowFieldTruncationHeader" element="tns:AllowFieldTruncationHeader"/>
+  <part name="CallOptions" element="tns:CallOptions"/>
+  <part name="DebuggingHeader" element="tns:DebuggingHeader"/>
+  <part name="DebuggingInfo" element="tns:DebuggingInfo"/>
+  <part name="SessionHeader" element="tns:SessionHeader"/>
+ </message>
+ <!-- Operation Messages -->
+ <message name="createExampleCustomerRequest">
+  <part element="tns:createExampleCustomer" name="parameters"/>
+ </message>
+ <message name="createExampleCustomerResponse">
+  <part element="tns:createExampleCustomerResponse" name="parameters"/>
+ </message>
+ <message name="createExampleCustomerWithPORequest">
+  <part element="tns:createExampleCustomerWithPO" name="parameters"/>
+ </message>
+ <message name="createExampleCustomerWithPOResponse">
+  <part element="tns:createExampleCustomerWithPOResponse" name="parameters"/>
+ </message>
+ <portType name="ExampleWebServicePortType">
+  <operation name="createExampleCustomer">
+   <input message="tns:createExampleCustomerRequest"/>
+   <output message="tns:createExampleCustomerResponse"/>
+  </operation>
+  <operation name="createExampleCustomerWithPO">
+   <input message="tns:createExampleCustomerWithPORequest"/>
+   <output message="tns:createExampleCustomerWithPOResponse"/>
+  </operation>
+ </portType>
+ <binding name="ExampleWebServiceBinding" type="tns:ExampleWebServicePortType">
+  <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+  <operation name="createExampleCustomer">
+   <soap:operation soapAction=""/>
+   <input>
+    <soap:header use="literal" part="SessionHeader" message="tns:Header"/>
+    <soap:header use="literal" part="CallOptions" message="tns:Header"/>
+    <soap:header use="literal" part="DebuggingHeader" message="tns:Header"/>
+    <soap:header use="literal" part="AllowFieldTruncationHeader" message="tns:Header"/>
+    <soap:body use="literal" parts="parameters"/>
+   </input>
+   <output>
+    <soap:header use="literal" part="DebuggingInfo" message="tns:Header"/>
+    <soap:body use="literal"/>
+   </output>
+  </operation>
+  <operation name="createExampleCustomerWithPO">
+   <soap:operation soapAction=""/>
+   <input>
+    <soap:header use="literal" part="SessionHeader" message="tns:Header"/>
+    <soap:header use="literal" part="CallOptions" message="tns:Header"/>
+    <soap:header use="literal" part="DebuggingHeader" message="tns:Header"/>
+    <soap:header use="literal" part="AllowFieldTruncationHeader" message="tns:Header"/>
+    <soap:body use="literal" parts="parameters"/>
+   </input>
+   <output>
+    <soap:header use="literal" part="DebuggingInfo" message="tns:Header"/>
+    <soap:body use="literal"/>
+   </output>
+  </operation>
+ </binding>
+ <service name="ExampleWebServiceService">
+  <documentation></documentation>
+  <port binding="tns:ExampleWebServiceBinding" name="ExampleWebService">
+   <soap:address location="https://redacted.example.com/services/Soap/class/ExampleWebService"/>
+  </port>
+ </service>
+</definitions>
